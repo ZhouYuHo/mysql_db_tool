@@ -140,7 +140,3 @@ class mysql_db_tool:
         """ % (table_name, self.db_name)
         df = pd.read_sql_query(query_field_sql, self.engine)
         return df
-
-
-db = mysql_db_tool('datalab_dev', 'datalabgogo', 'contentdb.crkldnwly6ki.rds.cn-north-1.amazonaws.com.cn', '3306', 'analytics_maft_data')
-print(db.query_db_field('JS_WIND_EST'))
