@@ -91,7 +91,7 @@ class mysql_db_tool:
 
         if query_sql is None:
             query_sql = """
-            SELECT %s FROM %s WHERE HISVALID = 1 
+            SELECT %s FROM %s
             """ % (field_name, table_name)
 
         df = pd.read_sql_query(query_sql, self.engine)
