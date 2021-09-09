@@ -10,3 +10,5 @@
 - 插入数据：insert_db(self, df, table_name)
 - 查询表的字段信息：query_db_field(self, table_name)
 
+- 查询数据库的所有表名：query_table_name(self)
+

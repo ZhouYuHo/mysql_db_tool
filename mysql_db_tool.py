@@ -140,3 +140,16 @@ class mysql_db_tool:
         """ % (table_name, self.db_name)
         df = pd.read_sql_query(query_field_sql, self.engine)
         return df
+
+    # 查询数据库的所有表名
+    def query_table_name(self):
+        """
+        直接调用返回库的所有表名
+        :return: [DataFrame] 返回 TABLE_NAME
+        """
+        query_table_sql = """
+            select table_name from information_schema.tables where table_schema='%s' 
+        """ % self.db_name
+
+        df = pd.read_sql_query(query_table_sql, self.engine)
+        return df
