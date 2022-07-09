@@ -6,6 +6,7 @@
 from sqlalchemy import create_engine
 import pymysql
 import pandas as pd
+import datetime
 
 
 class mysql_db_tool:
@@ -114,17 +115,21 @@ class mysql_db_tool:
             values = ''
             update = ''
             for j in range(len(df.iloc[i])):
-                if isinstance(df.iloc[i][j], str):
+                if pd.isna(df.iloc[i][j]):
+                    values += 'NULL,'
+                    update += df.columns[j] + '=NULL,'
+
+                elif isinstance(df.iloc[i][j], str) or isinstance(df.iloc[i][j], type(None)) or isinstance(df.iloc[i][j], datetime.date):
                     values += '\'' + str(df.iloc[i][j]) + '\','
                     update += df.columns[j] + '=\'' + str(df.iloc[i][j]) + '\','
+
                 else:
                     values += str(df.iloc[i][j]) + ','
                     update += df.columns[j] + '=' + str(df.iloc[i][j]) + ','
 
-            # DataFrame 空字段为 nan, 插入数据库替换为 null
-            values = values[:-1].replace('nan', 'null').replace('None', 'null')
-            update = update[:-1].replace('nan', 'null').replace('None', 'null')
-
+            values = values[:-1]
+            update = update[:-1]
+            
             self.engine.execute(insert_sql.format(values, update))
 
     # 查询表的字段信息
